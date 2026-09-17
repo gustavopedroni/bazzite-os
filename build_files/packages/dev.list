@@ -1,0 +1,32 @@
+# Toolchain de compilacao.
+# @c-development ja traz: autoconf automake binutils bison flex gcc gcc-c++
+# gdb glibc-devel libtool make pkgconf strace + ccache cscope ctags valgrind.
+@c-development
+
+# Fora do grupo (cmake e "optional" nele, entao nao vem por padrao).
+cmake
+patch
+git
+
+# Libs de build exigidas por asdf/nodejs/python — tiradas do historico do shell.
+libicu-devel
+zlib-devel
+bzip2
+bzip2-devel
+readline-devel
+sqlite
+sqlite-devel
+openssl-devel
+libffi-devel
+xz-devel
+libuuid-devel
+gdbm-libs
+libnsl2
+tk-devel
+
+# Clientes de forge.
+gh
+glab
+
+# repo vscode (ver 00-repos.sh)
+code

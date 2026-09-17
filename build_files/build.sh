@@ -1,27 +1,18 @@
-#!/bin/bash
+#!/usr/bin/bash
+set -eoux pipefail
 
-set -ouex pipefail
-
-# Copy the contents of system_files/ of the git repo to /
-cp -avf "/ctx/system_files"/. /
-
-### Install packages
-
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
-
-# this installs a package from fedora repos
-dnf5 install -y tmux
-
-# Use a COPR Example:
+# Orquestrador. Cada etapa vive no seu proprio script, em ordem numerica:
 #
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+#   00-repos.sh         repos de terceiros (vscode, copr)
+#   10-packages.sh      dnf5 install lendo packages/*.list
+#   15-system-files.sh  copia system_files/ para /
+#   20-shell.sh         zsh padrao + zinit + oh-my-zsh + powerlevel10k
+#   30-services.sh      presets do systemd
+#
+# Para adicionar um pacote, edite packages/<categoria>.list — nao este arquivo.
 
-#### Example for enabling a System Unit File
-
-systemctl enable podman.socket
+for stage in /ctx/[0-9][0-9]-*.sh; do
+    echo "::group:: ===$(basename "$stage")==="
+    bash "$stage"
+    echo "::endgroup::"
+done

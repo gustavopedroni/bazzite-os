@@ -1,0 +1,7 @@
+# Nerd Fonts (terra). Substitui os ZIPs que ficavam em ~/.local/share/fonts.
+# MesloLGS e a fonte do perfil do Konsole e do powerlevel10k.
+meslo-nerd-fonts
+jetbrainsmono-nerd-fonts
+firacode-nerd-fonts
+hack-nerd-fonts
+nerdfontssymbolsonly-nerd-fonts

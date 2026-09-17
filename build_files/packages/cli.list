@@ -1,0 +1,21 @@
+# Ferramentas de linha de comando do dia a dia.
+tmux
+vim-enhanced
+micro
+htop
+btop
+p7zip
+p7zip-plugins
+unzip
+whois
+nmap-ncat
+wget2-wget
+ca-certificates
+
+# uv: gerenciador de pacotes Python da Astral. Vem do repo do Fedora em vez do
+# curl|sh, e traz /usr/bin/uvx + completions do zsh. O nvibrant.service depende
+# dele (ver system_files/usr/lib/systemd/user/nvibrant.service).
+uv
+
+# terra
+topgrade

@@ -1,0 +1,5 @@
+# Socket rootless do Podman, para quem quiser apontar o DOCKER_HOST nele.
+enable podman.socket
+
+# Vibrance/dithering nas saidas NVIDIA no login grafico.
+enable nvibrant.service

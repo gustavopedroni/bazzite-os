@@ -1,0 +1,30 @@
+[Unit]
+Description=Apply nvibrant (vibrance/dithering nas saidas NVIDIA)
+# default.target + o sleep abaixo e o que ja funciona na maquina de origem.
+# graphical-session.target seria o gatilho "certo" para unit de usuario e
+# reaplicaria ao reiniciar a sessao, mas depende do Plasma ativar esse target;
+# se quiser trocar, teste antes que a vibrance realmente aplica no login.
+After=graphical.target
+# So faz sentido com driver NVIDIA carregado.
+ConditionPathExists=/proc/driver/nvidia/version
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+# uvx resolve o binario do nvibrant compatível com a versao do driver em uso.
+# O rpm do copr (nvibrant-1.2.0) falha com "AllocDevice ioctl failed" no driver
+# 615.71.09, por isso nao esta na imagem.
+#
+# O sleep e a margem para o servidor grafico terminar de subir e as saidas
+# aparecerem: sem ele o nvibrant roda cedo demais e nao acha display. Ajuste
+# aqui se o seu boot for mais lento (ou 0 se quiser testar sem margem).
+ExecStartPre=/bin/sleep 5
+
+# Os sete numeros sao uma saida cada, na ordem que o nvibrant enumera.
+# vibrance: -1024..1023 (0 = neutro) · dithering: valor por saida.
+ExecStart=/usr/bin/env ATTRIBUTE=vibrance  /usr/bin/uvx nvibrant 1 1 1 1 1 1 1
+ExecStart=/usr/bin/env ATTRIBUTE=dithering /usr/bin/uvx nvibrant 105 105 105 105 105 105 105
+
+[Install]
+WantedBy=default.target

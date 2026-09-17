@@ -1,0 +1,15 @@
+# Docker e Podman lado a lado. Verificado: instalam sem conflito, nada e
+# removido do Bazzite (+360 MiB).
+#
+# O podman ja vem da base com o socket de usuario; o docker traz o proprio
+# daemon. Cada um com seu socket, sem disputa:
+#   docker CLI -> /var/run/docker.sock  (dockerd, via docker.socket)
+#   podman     -> /run/user/$UID/podman/podman.sock
+#
+# NAO instalar podman-docker aqui: ele tambem entrega /usr/bin/docker e
+# brigaria com o docker-ce-cli pelo mesmo caminho.
+docker-ce
+docker-ce-cli
+containerd.io
+docker-buildx-plugin
+docker-compose-plugin
