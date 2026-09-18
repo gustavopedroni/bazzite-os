@@ -1,6 +1,6 @@
 # Ferramentas de linha de comando do dia a dia.
 tmux
-vim-enhanced
+neovim
 micro
 htop
 btop

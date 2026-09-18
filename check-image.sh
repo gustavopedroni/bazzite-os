@@ -66,6 +66,19 @@ for dir in "$MODULES"/*/files; do
 done
 ok "$nfiles arquivos conferidos"
 
+echo "== cli"
+if rpm -q vim-enhanced &>/dev/null; then bad "vim-enhanced ainda instalado"; else ok "vim-enhanced removido"; fi
+# O symlink, nao o `alternatives --display`: o registro fica em /var/lib/alternatives,
+# e no rebase o /var da imagem nao chega.
+check "vim aponta para o nvim (alternatives)" test "$(readlink -f /usr/bin/vim)" = /usr/bin/nvim
+check "core.editor=nvim no git do sistema" test "$(git config --system core.editor)" = nvim
+git_editor=$(git var GIT_EDITOR 2>/dev/null)
+if [[ "$git_editor" == nvim ]]; then
+    ok "git usa o nvim"
+else
+    warn "git usa '$git_editor': GIT_EDITOR ou o core.editor do seu ~/.gitconfig vencem o do sistema"
+fi
+
 echo "== shell"
 check "loader do /etc/zshrc.d no /etc/zshrc" grep -q 'zshrc.d' /etc/zshrc
 check "zinit em /usr/share/zinit" test -f /usr/share/zinit/zinit.zsh
