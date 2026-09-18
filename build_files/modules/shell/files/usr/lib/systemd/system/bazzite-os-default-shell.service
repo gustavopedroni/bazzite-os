@@ -1,0 +1,16 @@
+# Habilitado em shell/setup.sh.
+[Unit]
+Description=Troca o shell dos usuarios do wheel de bash para zsh
+# Antes do login, senao a primeira sessao pos-rebase ainda abre bash.
+Before=systemd-user-sessions.service
+# Uma vez so: se o usuario voltar para o bash depois, a imagem respeita.
+ConditionPathExists=!/var/lib/bazzite-os/default-shell
+
+[Service]
+Type=oneshot
+StateDirectory=bazzite-os
+ExecStart=/usr/libexec/bazzite-os-default-shell
+ExecStartPost=/usr/bin/touch /var/lib/bazzite-os/default-shell
+
+[Install]
+WantedBy=multi-user.target

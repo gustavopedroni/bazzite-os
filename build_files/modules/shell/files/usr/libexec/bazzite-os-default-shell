@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+# Rebase de um Bazzite: o usuario ja existe com bash, e o /etc/default/useradd
+# (ver setup.sh) so vale para usuario novo. O skel tambem nunca chegou ao home.
+# Chamado por bazzite-os-default-shell.service.
+set -euo pipefail
+
+for user in $(getent group wheel | cut -d: -f4 | tr ',' ' '); do
+    IFS=: read -r _ _ _ _ _ home shell < <(getent passwd "$user")
+    case "$shell" in
+        /bin/bash|/usr/bin/bash)
+            usermod -s /usr/bin/zsh "$user"
+            # Com bash, um ~/.zshrc existente nao estava em uso (ex.: o padrao do
+            # Fedora). Troca pelo da imagem; o antigo fica em ~/.zshrc.~1~.
+            runuser -u "$user" -- cp --backup=numbered /etc/skel/.zshrc "$home"/
+            ;;
+    esac
+    # Sem sobrescrever: so preenche o que faltar (ex.: .p10k.zsh).
+    runuser -u "$user" -- cp --update=none /etc/skel/.zshrc /etc/skel/.p10k.zsh "$home"/
+done

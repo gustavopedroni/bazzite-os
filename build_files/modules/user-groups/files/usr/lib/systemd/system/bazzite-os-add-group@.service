@@ -1,5 +1,5 @@
 # Habilitado por modulo: systemctl enable bazzite-os-add-group@<grupo>.service
-# (ver containers/setup.sh e virt/setup.sh).
+# (ver containers/setup.sh).
 [Unit]
 Description=Adiciona os usuarios do wheel ao grupo %i
 After=systemd-sysusers.service

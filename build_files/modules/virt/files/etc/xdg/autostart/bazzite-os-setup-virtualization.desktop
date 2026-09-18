@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Configurar virtualizacao (bazzite-os)
+Exec=/usr/libexec/bazzite-os-setup-virtualization
+NoDisplay=true
+OnlyShowIn=KDE;

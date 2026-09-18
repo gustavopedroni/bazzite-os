@@ -34,3 +34,7 @@ clone_pinned https://github.com/ohmyzsh/ohmyzsh        /usr/share/oh-my-zsh
 
 # zsh como shell padrao de usuario novo.
 sed -i 's|^SHELL=.*|SHELL=/usr/bin/zsh|' /etc/default/useradd
+
+# Usuario que ja existia (rebase) nao passa pelo useradd: este servico troca o
+# shell dele uma vez no boot.
+systemctl enable bazzite-os-default-shell.service

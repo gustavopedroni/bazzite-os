@@ -23,8 +23,8 @@ ExecStartPre=/bin/sleep 5
 
 # Os sete numeros sao uma saida cada, na ordem que o nvibrant enumera.
 # vibrance: -1024..1023 (0 = neutro) · dithering: valor por saida.
-ExecStart=/usr/bin/env ATTRIBUTE=vibrance  /usr/bin/uvx nvibrant 1 1 1 1 1 1 1
-ExecStart=/usr/bin/env ATTRIBUTE=dithering /usr/bin/uvx nvibrant 105 105 105 105 105 105 105
+ExecStart=/usr/bin/env ATTRIBUTE=vibrance  /usr/bin/uvx nvibrant 105 105 105 105 105 105 105
+ExecStart=/usr/bin/env ATTRIBUTE=dithering /usr/bin/uvx nvibrant 1 1 1 1 1 1 1
 
 [Install]
 WantedBy=default.target
