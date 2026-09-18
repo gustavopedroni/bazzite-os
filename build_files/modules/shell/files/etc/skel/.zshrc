@@ -43,8 +43,6 @@ zinit light romkatv/powerlevel10k
 
 # --- Ambiente pessoal ---
 
-export ELECTRON_OZONE_PLATFORM_HINT=auto
-
 export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
 path=(
   "$ANDROID_SDK_ROOT"/{emulator,platform-tools,cmdline-tools/latest/bin}
