@@ -1,0 +1,7 @@
+# Sem o RPM nvibrant: o do copr starfish/nvibrant falha no driver atual
+# (AllocDevice ioctl failed). O nvibrant.service roda `uvx nvibrant`, que baixa
+# o binario certo para a versao do driver em uso.
+#
+# O uv tambem esta em cli/, mas fica listado aqui para o modulo nao depender de
+# outro (o dnf ignora a repeticao).
+uv

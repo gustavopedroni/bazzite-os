@@ -27,6 +27,3 @@ tk-devel
 # Clientes de forge.
 gh
 glab
-
-# repo vscode (ver 00-repos.sh)
-code

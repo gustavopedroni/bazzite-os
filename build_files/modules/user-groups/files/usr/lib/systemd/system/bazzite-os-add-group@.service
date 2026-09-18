@@ -1,0 +1,16 @@
+# Habilitado por modulo: systemctl enable bazzite-os-add-group@<grupo>.service
+# (ver containers/setup.sh e virt/setup.sh).
+[Unit]
+Description=Adiciona os usuarios do wheel ao grupo %i
+After=systemd-sysusers.service
+# Uma vez por grupo: se o usuario sair do grupo depois, a imagem nao o poe de volta.
+ConditionPathExists=!/var/lib/bazzite-os/group-%i
+
+[Service]
+Type=oneshot
+StateDirectory=bazzite-os
+ExecStart=/usr/libexec/bazzite-os-add-group %i
+ExecStartPost=/usr/bin/touch /var/lib/bazzite-os/group-%i
+
+[Install]
+WantedBy=multi-user.target

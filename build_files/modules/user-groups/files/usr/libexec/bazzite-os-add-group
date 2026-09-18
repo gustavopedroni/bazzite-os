@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+# Uso: bazzite-os-add-group <grupo>. Poe os usuarios do wheel no grupo.
+# Chamado por bazzite-os-add-group@<grupo>.service, depois do systemd-sysusers.
+set -euo pipefail
+group="$1"
+
+# Com nss-altfiles o grupo pode existir so em /usr/lib/group: o getent acha,
+# mas o usermod so edita /etc/group e falharia. Copia a linha antes.
+grep -q "^${group}:" /etc/group || grep "^${group}:" /usr/lib/group >> /etc/group
+
+for user in $(getent group wheel | cut -d: -f4 | tr ',' ' '); do
+    usermod -aG "$group" "$user"
+done

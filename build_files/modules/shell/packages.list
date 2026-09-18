@@ -1,6 +1,6 @@
 # Shell. Os plugins (autosuggestions, syntax-highlighting, p10k) NAO vem da
 # imagem: sao carregados pelo zinit no ~/.zshrc. Aqui fica so o que e binario
-# de sistema. O zinit e o oh-my-zsh em si sao clonados no 20-shell.sh.
+# de sistema. O zinit e o oh-my-zsh em si sao clonados no setup.sh.
 zsh
 keychain
 

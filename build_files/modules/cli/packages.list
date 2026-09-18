@@ -14,7 +14,7 @@ ca-certificates
 
 # uv: gerenciador de pacotes Python da Astral. Vem do repo do Fedora em vez do
 # curl|sh, e traz /usr/bin/uvx + completions do zsh. O nvibrant.service depende
-# dele (ver system_files/usr/lib/systemd/user/nvibrant.service).
+# dele (ver modules/nvibrant/).
 uv
 
 # terra
