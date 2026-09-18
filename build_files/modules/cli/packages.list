@@ -9,6 +9,7 @@ p7zip-plugins
 unzip
 whois
 nmap-ncat
+sshpass
 wget2-wget
 ca-certificates
 
