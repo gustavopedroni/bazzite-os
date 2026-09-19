@@ -3,6 +3,17 @@ contents = """
 %post
 bootc switch --mutate-in-place --transport registry ghcr.io/gustavopedroni/bazzite-os:latest
 %end
+
+# Flatpaks da imagem (/usr/share/flatpak/preinstall.d) ja na instalacao. O bib
+# nao embute flatpak na ISO, entao baixa do flathub aqui. Sem rede, falha sem
+# abortar a instalacao e o bazzite-os-flatpak-preinstall.service instala no boot.
+%post --log=/root/flatpak-preinstall.log
+flatpak preinstall -y
+# Criados no chroot, os arquivos ficam sem o label SELinux certo e o sistema
+# barra os apps. A ISO oficial do Bazzite faz o mesmo restorecon.
+setenforce 0 || true
+restorecon -R /var/lib/flatpak
+%end
 """
 
 [customizations.installer.modules]

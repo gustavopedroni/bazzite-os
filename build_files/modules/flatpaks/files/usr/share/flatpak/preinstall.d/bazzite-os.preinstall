@@ -1,0 +1,36 @@
+# Instalados por `flatpak preinstall` (ver flatpak-preinstall(5)), no escopo do
+# sistema: na ISO pelo %post do disk_config/iso-kde.toml, e no boot por
+# bazzite-os-flatpak-preinstall.service.
+# Desinstalou? Nao volta. App novo aqui entra no proximo boot. App tirado daqui
+# e DESINSTALADO no proximo boot (o preinstall sincroniza nos dois sentidos).
+# Branch=stable e obrigatorio: sem ele o flatpak procura "master", que o
+# Flathub nao tem.
+[Flatpak Preinstall com.visualstudio.code]
+Branch=stable
+
+[Flatpak Preinstall com.spotify.Client]
+Branch=stable
+
+[Flatpak Preinstall com.slack.Slack]
+Branch=stable
+
+[Flatpak Preinstall com.getpostman.Postman]
+Branch=stable
+
+[Flatpak Preinstall com.getmailspring.Mailspring]
+Branch=stable
+
+[Flatpak Preinstall com.discordapp.Discord]
+Branch=stable
+
+[Flatpak Preinstall com.google.Chrome]
+Branch=stable
+
+[Flatpak Preinstall io.github.ilya_zlobintsev.LACT]
+Branch=stable
+
+[Flatpak Preinstall com.github.tchx84.Flatseal]
+Branch=stable
+
+[Flatpak Preinstall io.github.alainm23.planify]
+Branch=stable

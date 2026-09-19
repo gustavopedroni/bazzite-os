@@ -1,0 +1,19 @@
+# Habilitado em flatpaks/setup.sh. A ISO ja roda o mesmo comando no %post
+# (disk_config/iso-kde.toml); este servico cobre o resto: instalacao sem rede,
+# rebase de outra imagem e app novo no .preinstall.
+[Unit]
+Description=Instala os flatpaks de /usr/share/flatpak/preinstall.d
+Documentation=man:flatpak-preinstall(1)
+Wants=network-online.target
+# bazzite-flatpak-manager garante o remote flathub ligado.
+After=network-online.target bazzite-flatpak-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/flatpak preinstall -y
+# Sem rede no boot: tenta de novo.
+Restart=on-failure
+RestartSec=1min
+
+[Install]
+WantedBy=multi-user.target
