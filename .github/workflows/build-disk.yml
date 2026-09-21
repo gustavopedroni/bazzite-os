@@ -98,15 +98,25 @@ jobs:
         # Fonte unica: a mesma lista que a imagem usa em preinstall.d. O
         # install-flatpaks.ks do installer copia esses flatpaks da ISO pro disco,
         # entao instalacao sem rede ja sai com os apps.
+        #
+        # O arquivo nao pode ter comentario: o build.sh do installer faz
+        # `xargs -r flatpak install < flatpaks`, e xargs nao entende '#' — toda
+        # palavra vira um ref. Por isso so as linhas app/... saem daqui.
         env:
           PREINSTALL: build_files/modules/flatpaks/files/usr/share/flatpak/preinstall.d/bazzite-os.preinstall
         run: |
-          {
-            echo "# GERADO pelo workflow a partir de ${PREINSTALL}"
-            echo "# Nao editar a mao: edite o .preinstall, que e a fonte unica."
-            sed -n 's/^\[Flatpak Preinstall \(.*\)\]$/app\/\1\/x86_64\/stable/p' "${PREINSTALL}"
-          } > installer/kde_flatpaks/flatpaks
-          grep -c '^app/' installer/kde_flatpaks/flatpaks
+          sed -n 's/^\[Flatpak Preinstall \(.*\)\]$/app\/\1\/x86_64\/stable/p' "${PREINSTALL}" \
+            > installer/kde_flatpaks/flatpaks
+          # Duas formas de quebrar em silencio: linha que nao e ref (xargs passa
+          # cada palavra como argumento) e lista vazia (o `xargs -r` nao reclama
+          # e a ISO sai sem flatpak nenhum).
+          n=$(grep -c . installer/kde_flatpaks/flatpaks || true)
+          if [ "${n}" -eq 0 ] || grep -qvE '^(app|runtime)/[^ ]+$' installer/kde_flatpaks/flatpaks; then
+            echo "::error::installer/kde_flatpaks/flatpaks invalido (${n} linhas) -- conferir ${PREINSTALL}"
+            cat -A installer/kde_flatpaks/flatpaks
+            exit 1
+          fi
+          echo "${n} flatpaks:"
           cat installer/kde_flatpaks/flatpaks
 
       - name: Build the live payload image
