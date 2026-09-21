@@ -78,6 +78,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
+      - name: Keep bwrap children in the parent AppArmor profile (Ubuntu 26.04)
+        # O 26.04 traz o perfil bwrap-userns-restrict. Ele casa com /usr/bin/bwrap
+        # por path, tambem dentro de um podman --privileged, e move tudo que o bwrap
+        # inicia pro perfil "unpriv_bwrap", sem capabilities. O osbuild roda cada
+        # stage sob bwrap, entao o root dentro do BIB perde CAP_CHOWN e o direito de
+        # montar: dez "fchownat() ... Operation not permitted" e depois
+        # "mount: /run/osbuild/tree/dev: permission denied" no org.osbuild.rpm.
+        # Pelo include local que o perfil empacotado ja suporta, os filhos ficam em
+        # "bwrap (enforce)". AppArmor segue ligado e os dois perfis empacotados
+        # seguem carregados. No-op onde o perfil nao existe.
+        run: |
+          if sudo test -r /etc/apparmor.d/bwrap-userns-restrict &&
+             sudo test -r /sys/kernel/security/apparmor/profiles &&
+             sudo grep -qx 'bwrap (enforce)' /sys/kernel/security/apparmor/profiles; then
+            printf '%s\n' 'priority=100 allow file rwlkm /**,' 'priority=100 allow ix /**,' \
+              | sudo tee /etc/apparmor.d/local/bwrap-userns-restrict >/dev/null
+            sudo apparmor_parser -Q /etc/apparmor.d/bwrap-userns-restrict
+            sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
+            echo "bwrap AppArmor override installed"
+          else
+            echo "bwrap-userns-restrict not enforced on this runner, nothing to do"
+          fi
+
       - name: Build disk images
         id: build
         uses: osbuild/bootc-image-builder-action@cb4b3e9c112077ea96a191fad229d51d2a012885 # main
