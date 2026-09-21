@@ -29,6 +29,17 @@ dnf5 -y install "${packages[@]}"
 comm -13 <(echo "$repos_before") <(enabled_repos) |
     xargs -r -I{} dnf5 -y config-manager setopt '{}.enabled=0'
 
+# 2b. Chaves GPG do Terra por URL em vez de file://. O `config-manager setopt`
+#     do dnf5 grava em /etc/dnf/repos.override.d/, mas o depsolve do
+#     bootc-image-builder le so /etc/yum.repos.d/ (osbuild chama
+#     create_repos_from_dir com config_file_path=/dev/null): para ele os repos
+#     do Terra seguem enabled=1 e, com repo_gpgcheck=1, ele busca a chave em
+#     file:///etc/pki/rpm-gpg/... — caminho que o bib nao reescreve para a raiz
+#     da imagem montada, e a ISO morre no depsolve (bootc-image-builder#1188).
+#     A URL serve a mesma chave que o terra-gpg-keys instala, entao nada de
+#     verificacao e afrouxado.
+sed -i -E 's|^gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-terra(\$releasever[a-z-]*)$|gpgkey=https://repos.fyralabs.com/terra\1/key.asc|' /etc/yum.repos.d/terra*.repo
+
 # 3. Arquivos. Depois dos pacotes de proposito: se o skel chegar antes, o rpm do
 #    zsh encontra /etc/skel/.zshrc ocupado e larga um .zshrc.rpmnew no home de
 #    todo usuario novo. Copiando depois, os nossos arquivos ganham.
