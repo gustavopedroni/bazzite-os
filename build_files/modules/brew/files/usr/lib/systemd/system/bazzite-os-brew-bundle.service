@@ -1,0 +1,23 @@
+# Habilitado em brew/setup.sh. Mesmo molde do brew-upgrade.service da base: o
+# brew em /home/linuxbrew e do UID 1000 (o brew-setup.service faz o chown).
+[Unit]
+Description=Instala os pacotes de /usr/share/bazzite-os/Brewfile
+Wants=network-online.target
+After=network-online.target brew-setup.service
+ConditionPathIsSymbolicLink=/home/linuxbrew/.linuxbrew/bin/brew
+
+[Service]
+Type=oneshot
+User=1000
+Environment=HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
+Environment=HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
+Environment=HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew
+Environment=HOMEBREW_NO_AUTO_UPDATE=1
+# check e local e rapido: so vai a rede quando falta algo.
+ExecStart=/usr/bin/bash -c 'b=/home/linuxbrew/.linuxbrew/bin/brew f=/usr/share/bazzite-os/Brewfile; $b bundle check --file=$f || $b bundle install --file=$f'
+# Sem rede no boot: tenta de novo.
+Restart=on-failure
+RestartSec=1min
+
+[Install]
+WantedBy=multi-user.target

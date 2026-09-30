@@ -5,9 +5,6 @@
 # e DESINSTALADO no proximo boot (o preinstall sincroniza nos dois sentidos).
 # Branch=stable e obrigatorio: sem ele o flatpak procura "master", que o
 # Flathub nao tem.
-[Flatpak Preinstall com.visualstudio.code]
-Branch=stable
-
 [Flatpak Preinstall com.spotify.Client]
 Branch=stable
 
@@ -33,4 +30,25 @@ Branch=stable
 Branch=stable
 
 [Flatpak Preinstall io.github.alainm23.planify]
+Branch=stable
+
+[Flatpak Preinstall io.dbeaver.DBeaverCommunity]
+Branch=stable
+
+[Flatpak Preinstall org.libreoffice.LibreOffice]
+Branch=stable
+
+[Flatpak Preinstall it.mijorus.gearlever]
+Branch=stable
+
+[Flatpak Preinstall org.videolan.VLC]
+Branch=stable
+
+[Flatpak Preinstall com.vysp3r.ProtonPlus]
+Branch=stable
+
+# MangoJuice: GUI do MangoHud, so existe no Flathub. Edita
+# ~/.config/MangoHud/MangoHud.conf, lido pelo terra-mangohud (64+32 bit) que a
+# base ja traz para Steam/Lutris nativos.
+[Flatpak Preinstall io.github.radiolamp.mangojuice]
 Branch=stable

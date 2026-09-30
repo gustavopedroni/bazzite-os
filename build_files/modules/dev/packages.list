@@ -24,6 +24,7 @@ gdbm-libs
 libnsl2
 tk-devel
 
-# Clientes de forge.
-gh
-glab
+# Clientes de forge (gh, glab) vem pelo brew: ver brew/.../Brewfile.
+
+# terra
+android-studio

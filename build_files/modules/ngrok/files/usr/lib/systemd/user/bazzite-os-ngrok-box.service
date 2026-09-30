@@ -1,0 +1,17 @@
+# Habilitado em ngrok/setup.sh. O box e o authtoken (~/.config/ngrok) sao por
+# usuario, entao isto e unit de usuario e nao de sistema.
+[Unit]
+Description=Cria o distrobox do ngrok (repo apt oficial)
+# Roda ate o export existir; depois disso, nunca mais. Apagou o box e quer de
+# volta? rm ~/.local/bin/ngrok e relogue (ou systemctl --user start).
+ConditionPathExists=!%h/.local/bin/ngrok
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/distrobox assemble create --file /usr/share/bazzite-os/distrobox/ngrok.ini
+# Sem rede no login: tenta de novo.
+Restart=on-failure
+RestartSec=1min
+
+[Install]
+WantedBy=default.target

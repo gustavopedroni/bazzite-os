@@ -10,6 +10,7 @@ unzip
 whois
 nmap-ncat
 sshpass
+wavemon
 wget2-wget
 ca-certificates
 
@@ -18,5 +19,5 @@ ca-certificates
 # dele (ver modules/nvibrant/).
 uv
 
-# terra
-topgrade
+# copr psygreg/linuxtoys
+linuxtoys

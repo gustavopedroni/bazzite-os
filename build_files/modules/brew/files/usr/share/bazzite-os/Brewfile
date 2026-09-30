@@ -1,0 +1,17 @@
+# Instalado por bazzite-os-brew-bundle.service a cada boot (so o que faltar).
+# App tirado daqui NAO e desinstalado (sem --cleanup): os seus brews ficam.
+#
+# No Linux, os casks do homebrew/cask sao todos macOS-only; app grafico so
+# pelo tap da Universal Blue. Nao tem aqui? Continua flatpak.
+tap "ublue-os/tap"
+cask "visual-studio-code-linux"
+
+brew "awscli"
+# gh e glab so por aqui, nao pelo dnf: o profile.d do brew poe o brew DEPOIS
+# do sistema no PATH, e um rpm deles esconderia estes.
+brew "glab"
+brew "gh"
+
+# adb: o brew nao tem no Linux. Vem do SDK do Android Studio
+# (~/Android/Sdk/platform-tools), que precisa estar no PATH (ou ADB=<caminho>).
+brew "scrcpy"

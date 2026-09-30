@@ -1,4 +1,4 @@
 #!/usr/bin/bash
 set -eoux pipefail
-# topgrade vem do Terra. A base traz terra.repo (desligado) e a chave GPG.
-dnf5 -y config-manager setopt terra.enabled=1
+# linuxtoys vem do copr do autor.
+dnf5 -y copr enable psygreg/linuxtoys

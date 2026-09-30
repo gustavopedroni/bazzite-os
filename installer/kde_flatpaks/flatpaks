@@ -1,4 +1,3 @@
-app/com.visualstudio.code/x86_64/stable
 app/com.spotify.Client/x86_64/stable
 app/com.slack.Slack/x86_64/stable
 app/com.getpostman.Postman/x86_64/stable
@@ -8,3 +7,9 @@ app/com.google.Chrome/x86_64/stable
 app/io.github.ilya_zlobintsev.LACT/x86_64/stable
 app/com.github.tchx84.Flatseal/x86_64/stable
 app/io.github.alainm23.planify/x86_64/stable
+app/io.dbeaver.DBeaverCommunity/x86_64/stable
+app/org.libreoffice.LibreOffice/x86_64/stable
+app/it.mijorus.gearlever/x86_64/stable
+app/org.videolan.VLC/x86_64/stable
+app/com.vysp3r.ProtonPlus/x86_64/stable
+app/io.github.radiolamp.mangojuice/x86_64/stable

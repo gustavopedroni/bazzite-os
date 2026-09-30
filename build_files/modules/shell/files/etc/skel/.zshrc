@@ -56,7 +56,5 @@ if [[ -d "${ASDF_DATA_DIR:-$HOME/.asdf}" ]]; then
   fpath=("${ASDF_DATA_DIR:-$HOME/.asdf}/completions" $fpath)
 fi
 
-alias flatpak-kill-all="flatpak ps --columns=instance | xargs -r -n 1 flatpak kill"
-
 # Tokens e chaves ficam fora do git. chmod 600.
 [[ -f ~/.config/secrets.env ]] && source ~/.config/secrets.env
