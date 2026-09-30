@@ -1,6 +1,6 @@
-# Habilitado em flatpaks/setup.sh. A ISO ja roda o mesmo comando no %post
-# (disk_config/iso-kde.toml); este servico cobre o resto: instalacao sem rede,
-# rebase de outra imagem e app novo no .preinstall.
+# Habilitado em flatpaks/setup.sh. A live ISO ja embute esses flatpaks e o
+# install-flatpaks.ks copia pro disco; este servico cobre o resto: rebase de
+# outra imagem e app novo no .preinstall.
 [Unit]
 Description=Instala os flatpaks de /usr/share/flatpak/preinstall.d
 Documentation=man:flatpak-preinstall(1)

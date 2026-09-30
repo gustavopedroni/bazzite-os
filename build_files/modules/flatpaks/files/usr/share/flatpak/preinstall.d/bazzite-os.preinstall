@@ -1,6 +1,6 @@
 # Instalados por `flatpak preinstall` (ver flatpak-preinstall(5)), no escopo do
-# sistema: na ISO pelo %post do disk_config/iso-kde.toml, e no boot por
-# bazzite-os-flatpak-preinstall.service.
+# sistema: na live ISO (build-disk.yml gera a lista do installer a partir
+# deste arquivo), e no boot por bazzite-os-flatpak-preinstall.service.
 # Desinstalou? Nao volta. App novo aqui entra no proximo boot. App tirado daqui
 # e DESINSTALADO no proximo boot (o preinstall sincroniza nos dois sentidos).
 # Branch=stable e obrigatorio: sem ele o flatpak procura "master", que o
