@@ -13,6 +13,7 @@ sshpass
 wavemon
 wget2-wget
 ca-certificates
+hardinfo2
 
 # uv: gerenciador de pacotes Python da Astral. Vem do repo do Fedora em vez do
 # curl|sh, e traz /usr/bin/uvx + completions do zsh. O nvibrant.service depende
