@@ -1,0 +1,47 @@
+#!/usr/bin/bash
+# Uso: bazzite-os-zram [on|off|status]   (sem argumento: alterna)
+# off mascara os drop-ins da imagem com /dev/null em /etc: volta ao padrao do
+# Bazzite (min(ram / 2, 16384), sysctl do kernel). A mascara fica em
+# /etc, entao a escolha sobrevive a reboot e a update da imagem.
+set -euo pipefail
+
+NAME=99-bazzite-os-zram.conf
+MASKS=("/etc/systemd/zram-generator.conf.d/$NAME" "/etc/sysctl.d/$NAME")
+
+status() {
+    if [[ -L ${MASKS[0]} ]]; then echo "Tuning: DESLIGADO (padrao do Bazzite)"; else echo "Tuning: LIGADO"; fi
+    zramctl
+    sysctl vm.swappiness vm.page-cluster vm.watermark_scale_factor vm.watermark_boost_factor vm.dirty_bytes vm.dirty_background_bytes
+}
+
+case "${1:-toggle}" in
+    status) status; exit ;;
+    toggle) if [[ -L ${MASKS[0]} ]]; then set -- on; else set -- off; fi ;;
+esac
+
+[[ $EUID -eq 0 ]] || exec sudo "$0" "$@"
+
+case "$1" in
+    on)
+        rm -f "${MASKS[@]}"
+        ;;
+    off)
+        for mask in "${MASKS[@]}"; do
+            mkdir -p "$(dirname "$mask")"
+            ln -sfn /dev/null "$mask"
+        done
+        # O sysctl --system nao desfaz valor que nenhum arquivo define mais:
+        # volta aos padroes do kernel antes de reaplicar o resto.
+        sysctl -q -w vm.swappiness=60 vm.page-cluster=3 vm.watermark_scale_factor=10 vm.watermark_boost_factor=15000 \
+            vm.dirty_ratio=20 vm.dirty_background_ratio=10
+        ;;
+    *) echo "Uso: $0 [on|off|status]"; exit 1 ;;
+esac
+
+sysctl -q --system
+systemctl daemon-reload
+# O restart faz swapoff, que precisa trazer o que esta no zram de volta para a
+# RAM. Se nao couber, a config nova vale no proximo boot.
+systemctl restart systemd-zram-setup@zram0 ||
+    echo "zram em uso: tamanho/algoritmo novos valem no proximo boot"
+status
