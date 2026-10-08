@@ -24,6 +24,10 @@ gdbm-libs
 libnsl2
 tk-devel
 
+# Runtime de apps Tauri (webview + tray).
+webkit2gtk4.1
+libayatana-appindicator-gtk3
+
 # Clientes de forge (gh, glab) vem pelo brew: ver brew/.../Brewfile.
 
 # terra

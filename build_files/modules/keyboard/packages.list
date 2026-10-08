@@ -1,0 +1,4 @@
+# O Bazzite KDE ja traz o fcitx5 (via kcm-fcitx5 e os addons CJK). Listado
+# aqui para o setup.sh nao depender disso: ele aponta o KWin para o .desktop
+# do launcher do fcitx5 (fcitx5-data, dependencia do fcitx5).
+fcitx5
