@@ -2,7 +2,8 @@
 # Uso: bazzite-os-zram [on|off|status]   (sem argumento: alterna)
 # A config fica em /usr/lib; o que liga/desliga e o link de mesmo nome em /etc:
 #   on  -> /etc/<arquivo> aponta para /usr/lib/<arquivo>
-#   off -> /etc/<arquivo> aponta para /dev/null (mascara): padrao do Bazzite
+#   off -> /etc/<arquivo> aponta para /dev/null (mascara): padrao do Bazzite e
+#          o estado em que a imagem vem
 # O link em /etc (e nao so o arquivo em /usr/lib) e por causa do tuned: ao
 # aplicar um perfil ele reaplica /etc/sysctl.d, mas nao /usr/lib/sysctl.d. Sem
 # o link, o perfil de desempenho trocaria swappiness para 10 e dirty para 40%.
