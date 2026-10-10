@@ -1,0 +1,11 @@
+# Controle de hardware. Os dois rodam daemon como root (units abaixo).
+
+# coolercontrol: curvas das fans (gabinete via nct6798 e a da GPU). Puxa o
+# coolercontrold.
+coolercontrol
+
+# lact: perfis da GPU (undervolt, offsets de clock/memoria). Em RPM e nao em
+# flatpak: o daemon roda como root, e o flatpak precisava de uma unit apontando
+# para o flatbox dentro do home. Fan control desligado nos perfis: quem cuida
+# da fan da GPU e o coolercontrol.
+lact

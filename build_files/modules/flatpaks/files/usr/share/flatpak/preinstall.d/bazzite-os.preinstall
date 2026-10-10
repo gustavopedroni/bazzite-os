@@ -23,9 +23,6 @@ Branch=stable
 [Flatpak Preinstall com.google.Chrome]
 Branch=stable
 
-[Flatpak Preinstall io.github.ilya_zlobintsev.LACT]
-Branch=stable
-
 [Flatpak Preinstall com.github.tchx84.Flatseal]
 Branch=stable
 
