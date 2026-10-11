@@ -150,7 +150,8 @@ nvidia_hardware_helper() {
             correct_image="<b>Nvidia (RTX Series | GTX 16xx Series+)</b>"
         fi
         # parse image information
-        if [[ $image_name == *-nvidia-open* ]]; then
+        # bazzite-os: base bazzite-nvidia-open, mas o nome da imagem nao tem "-nvidia-open"
+        if [[ $image_name == *-nvidia-open* || $image_name == */bazzite-os:* ]]; then
             echo "modern nvidia desktop image detected"
             image="nvidia-desktop"
         elif [[ $image_name == *-deck-nvidia* ]]; then
