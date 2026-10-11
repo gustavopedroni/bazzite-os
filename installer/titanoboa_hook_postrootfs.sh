@@ -8,7 +8,9 @@ source /etc/os-release
 dnf -qy versionlock clear
 
 # Install Anaconda
-dnf install -qy --enable-repo=fedora-cisco-openh264 --allowerasing firefox anaconda-live libblockdev-{btrfs,lvm,dm}
+# bazzite-os: udisks2-btrfs e so Recommends do cockpit-storaged e o bazzite nao
+# traz; sem ele o editor de armazenamento do Anaconda (Cockpit) nao oferece BTRFS.
+dnf install -qy --enable-repo=fedora-cisco-openh264 --allowerasing firefox anaconda-live libblockdev-{btrfs,lvm,dm} udisks2-btrfs
 
 mkdir -p /var/lib/rpm-state # Needed for Anaconda Web UI
 
