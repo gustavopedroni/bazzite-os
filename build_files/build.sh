@@ -23,6 +23,14 @@ for script in "$MODULES"/*/repos.sh; do
     bash "$script"
 done
 
+# 1b. Terra por baseurl em vez de metalink. O metalink do tetsudou atrasa em
+#     relacao ao CDN logo apos uma publicacao: o repomd.xml novo nao bate com
+#     nenhum hash listado, o dnf descarta o repo inteiro e os pacotes do Terra
+#     somem da transacao. Perde-se so a checagem de frescor do metalink; o
+#     repomd.xml segue verificado por assinatura (repo_gpgcheck=1) e os rpms
+#     por gpgcheck=1.
+sed -i -E 's|^#(baseurl=)|\1|; s|^(metalink=)|#\1|' /etc/yum.repos.d/terra*.repo
+
 # 2. Pacotes, numa transacao so.
 mapfile -t packages < <(grep -hvE '^\s*(#|$)' "$MODULES"/*/packages.list)
 dnf5 -y install "${packages[@]}"
