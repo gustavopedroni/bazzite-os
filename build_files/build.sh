@@ -28,8 +28,9 @@ done
 #     nenhum hash listado, o dnf descarta o repo inteiro e os pacotes do Terra
 #     somem da transacao. Perde-se so a checagem de frescor do metalink; o
 #     repomd.xml segue verificado por assinatura (repo_gpgcheck=1) e os rpms
-#     por gpgcheck=1.
-sed -i -E 's|^#(baseurl=)|\1|; s|^(metalink=)|#\1|' /etc/yum.repos.d/terra*.repo
+#     por gpgcheck=1. Desde o F45 o terra-release poe os .repo em
+#     /usr/share/dnf5/repos.d/, nao mais em /etc/yum.repos.d/.
+sed -i -E 's|^#(baseurl=)|\1|; s|^(metalink=)|#\1|' /usr/share/dnf5/repos.d/terra*.repo
 
 # 2. Pacotes, numa transacao so.
 mapfile -t packages < <(grep -hvE '^\s*(#|$)' "$MODULES"/*/packages.list)
@@ -46,7 +47,7 @@ comm -13 <(echo "$repos_before") <(enabled_repos) |
 #     da imagem montada, e a ISO morre no depsolve (bootc-image-builder#1188).
 #     A URL serve a mesma chave que o terra-gpg-keys instala, entao nada de
 #     verificacao e afrouxado.
-sed -i -E 's|^gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-terra(\$releasever[a-z-]*)$|gpgkey=https://repos.fyralabs.com/terra\1/key.asc|' /etc/yum.repos.d/terra*.repo
+sed -i -E 's|^gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-terra(\$releasever[a-z-]*)$|gpgkey=https://repos.fyralabs.com/terra\1/key.asc|' /usr/share/dnf5/repos.d/terra*.repo
 
 # 3. Arquivos. Depois dos pacotes de proposito: se o skel chegar antes, o rpm do
 #    zsh encontra /etc/skel/.zshrc ocupado e larga um .zshrc.rpmnew no home de
